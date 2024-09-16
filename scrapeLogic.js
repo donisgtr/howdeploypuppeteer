@@ -14,38 +14,54 @@ const scrapeLogic = async (res) => {
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
   });
-  try {
-    const page = await browser.newPage();
-
-    await page.goto("https://developer.chrome.com/");
-
-    // Set screen size
-    await page.setViewport({ width: 1080, height: 1024 });
-
-    // Type into search box
-    await page.type(".search-box__input", "automate beyond recorder");
-
-    // Wait and click on first result
-    const searchResultSelector = ".search-box__link";
-    await page.waitForSelector(searchResultSelector);
-    await page.click(searchResultSelector);
-
-    // Locate the full title with a unique string
-    const textSelector = await page.waitForSelector(
-      "text/Customize and automate"
-    );
-    const fullTitle = await textSelector.evaluate((el) => el.textContent);
-
-    // Print the full title
-    const logStatement = `The title of this blog post is ${fullTitle}`;
-    console.log(logStatement);
-    res.send(logStatement);
-  } catch (e) {
-    console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
-  } finally {
-    await browser.close();
-  }
+    try {
+        const browser = await puppeteer.launch({
+          headless: true // Define se o browser será exibido ou não
+        });
+        const page = await browser.newPage();
+        await page.goto("https://cliente.apdata.com.br/dicon/", {
+          waitUntil: "networkidle2",
+        });
+    
+        // Clicando no botão de aceitar os cookies
+        await page.waitForSelector("#button-1020");
+        await page.click("#button-1020");
+    
+        // Preenchendo o usuário
+        await page.waitForSelector("#ext-156");
+        await page.click("#ext-156");
+        await page.type("#ext-156", "2738045");
+    
+        // Preenchendo a senha
+        await page.waitForSelector("#ext-155");
+        await page.click("#ext-155");
+        await page.type("#ext-155", "Public@99");
+    
+        // Clicando no botão de login
+        await page.waitForSelector("#ext-151");
+        await page.click("#ext-151");
+    
+        // Esperando a navegação completar
+        try {
+          await page.waitForNavigation({ timeout: 90000, waitUntil: "networkidle2" });
+        } catch (error) {
+          console.error("Erro de navegação:", error.message);
+        }
+    
+        // Capturando o screenshot
+        const screenshotBuffer = await page.screenshot();
+    
+        await browser.close();
+    
+        // Definindo o tipo de conteúdo da resposta como imagem
+        res.setHeader("Content-Type", "image/png");
+    
+        // Enviando a imagem como resposta binária
+        res.end(screenshotBuffer, "binary");
+      } catch (error) {
+        console.error("Erro na automação:", error.message);
+        res.status(500).json({ error: "Erro ao realizar a automação." });
+      }
 };
 
 module.exports = { scrapeLogic };
