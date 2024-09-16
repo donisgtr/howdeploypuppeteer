@@ -62,6 +62,7 @@ const scrapeLogic = async (res) => {
         console.error("Erro na automação:", error.message);
         res.status(500).json({ error: "Erro ao realizar a automação." });
       }
+      
 };
 
 module.exports = { scrapeLogic };
