@@ -61,18 +61,11 @@ const scrapeLogic = async (res) => {
         await page.click("#ext-137");
         await page.type("#ext-137", "Public@99");
 
-         /*
-        // Clicando no botão de login
-        await page.waitForSelector("#ext-139");
-        await page.click("#ext-139");
-
-        try {
-          await page.waitForNavigation({ timeout: 30000, waitUntil: "networkidle2" });
-        } catch (error) {
-          console.error("Erro de navegação:", error.message);
-        }
         
-        */
+        // Clicando no botão de login
+        // await page.waitForSelector("#ext-139");
+        // await page.click("#ext-139");
+
 
         // Capturando o screenshot
         const screenshotBuffer = await page.screenshot();
