@@ -15,7 +15,7 @@ const scrapeLogic = async (res) => {
         : puppeteer.executablePath(),
   });
     try {
-        const browser = await puppeteer.launch({ headless: 'new' }); // Define se o browser será exibido ou não
+        const browser = await puppeteer.launch({ headless: true }); // Define se o browser será exibido ou não
         const page = await browser.newPage();
         await page.goto("https://cliente.apdata.com.br/dicon/", {
           waitUntil: "networkidle2",
@@ -60,6 +60,19 @@ const scrapeLogic = async (res) => {
         await page.waitForSelector("#ext-137");
         await page.click("#ext-137");
         await page.type("#ext-137", "Public@99");
+
+         /*
+        // Clicando no botão de login
+        await page.waitForSelector("#ext-139");
+        await page.click("#ext-139");
+
+        try {
+          await page.waitForNavigation({ timeout: 30000, waitUntil: "networkidle2" });
+        } catch (error) {
+          console.error("Erro de navegação:", error.message);
+        }
+        
+        */
 
         // Capturando o screenshot
         const screenshotBuffer = await page.screenshot();
