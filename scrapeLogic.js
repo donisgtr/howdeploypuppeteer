@@ -63,8 +63,8 @@ const scrapeLogic = async (res) => {
 
         
         // Clicando no botão de login
-        // await page.waitForSelector("#ext-139");
-        // await page.click("#ext-139");
+        await page.waitForSelector("#ext-139");
+        await page.click("#ext-139");
 
 
         // Capturando o screenshot
