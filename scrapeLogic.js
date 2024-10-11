@@ -74,12 +74,13 @@ const scrapeLogic = async (res) => {
     
         await browser.close();
 
-    
+      res.status(200).json({ error: "Sucesso!" });
+
         // Definindo o tipo de conteúdo da resposta como imagem
-        res.setHeader("Content-Type", "image/png");
+        // res.setHeader("Content-Type", "image/png");
     
         // Enviando a imagem como resposta binária
-        res.end(screenshotBuffer, "binary");
+        // res.end(screenshotBuffer, "binary");
       } catch (error) {
         console.error("Erro na automação:", error.message);
         res.status(500).json({ error: "Erro ao realizar a automação." });
