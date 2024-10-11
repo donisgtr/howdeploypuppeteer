@@ -15,7 +15,7 @@ const scrapeLogic = async (res) => {
         : puppeteer.executablePath(),
   });
     try {
-        const browser = await puppeteer.launch({ headless: true }); // Define se o browser será exibido ou não
+        const browser = await puppeteer.launch({ headless: false }); // Define se o browser será exibido ou não
         const page = await browser.newPage();
         await page.goto("https://cliente.apdata.com.br/dicon/", {
           waitUntil: "networkidle2",
@@ -53,39 +53,38 @@ const scrapeLogic = async (res) => {
         */
 
         // Preenchendo o usuário de BATER PONTO
-        await page.waitForSelector("#ext-135");
-        await page.click("#ext-135");
-        await page.type("#ext-135", "2738045");
-        // Preenchendo a senha de BATER PONTO
         await page.waitForSelector("#ext-137");
         await page.click("#ext-137");
-        await page.type("#ext-137", "Public@99");
+        await page.type("#ext-137", "2738045");
+        // Preenchendo a senha de BATER PONTO
+        await page.waitForSelector("#ext-139");
+        await page.click("#ext-139");
+        await page.type("#ext-139", "Public@99");
 
       
         // Clicando no botão de login
-       await page.waitForSelector("#ext-139");
-       await page.click("#ext-139");
-
-       await page.waitForSelector('#ext-141')
-
+       await page.waitForSelector("#ext-141");
+       await page.click("#ext-141");
 
         // Capturando o screenshot
         const screenshotBuffer = await page.screenshot();
     
         await browser.close();
 
-      res.status(200).json({ error: "Sucesso!" });
 
         // Definindo o tipo de conteúdo da resposta como imagem
-        // res.setHeader("Content-Type", "image/png");
+        res.setHeader("Content-Type", "image/png");
     
         // Enviando a imagem como resposta binária
-        // res.end(screenshotBuffer, "binary");
+        res.end(screenshotBuffer, "binary");
       } catch (error) {
         console.error("Erro na automação:", error.message);
+        alert("Erro na automação:", error.message);
         res.status(500).json({ error: "Erro ao realizar a automação." });
       }
       
 };
 
 module.exports = { scrapeLogic };
+
+
