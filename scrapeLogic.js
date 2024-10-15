@@ -15,7 +15,7 @@ const scrapeLogic = async (res) => {
         : puppeteer.executablePath(),
   });
     try {
-        const browser = await puppeteer.launch({ headless: false }); // Define se o browser será exibido ou não
+        const browser = await puppeteer.launch({ headless: "new" }); // Define se o browser será exibido ou não
         const page = await browser.newPage();
         await page.goto("https://cliente.apdata.com.br/dicon/", {
           waitUntil: "networkidle2",
@@ -63,20 +63,21 @@ const scrapeLogic = async (res) => {
 
       
         // Clicando no botão de login
-       await page.waitForSelector("#ext-141");
-       await page.click("#ext-141");
+       // await page.waitForSelector("#ext-141");
+       // await page.click("#ext-141");
 
         // Capturando o screenshot
-        const screenshotBuffer = await page.screenshot();
+        //const screenshotBuffer = await page.screenshot();
     
-        await browser.close();
+        res.status(200).json({ retorno: "Sucesso!" });
+        // await browser.close();
 
 
         // Definindo o tipo de conteúdo da resposta como imagem
-        res.setHeader("Content-Type", "image/png");
+        //res.setHeader("Content-Type", "image/png");
     
         // Enviando a imagem como resposta binária
-        res.end(screenshotBuffer, "binary");
+        //res.end(screenshotBuffer, "binary");
       } catch (error) {
         console.error("Erro na automação:", error.message);
         alert("Erro na automação:", error.message);
