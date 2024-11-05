@@ -56,13 +56,13 @@ const scrapeLogic = async (res) => {
         await page.waitForSelector("#ext-137");
         await page.click("#ext-137");
         await page.type("#ext-137", "2738045");
-        // Preenchendo a senha de BATER PONTO
+        // Preenchendo a senha de BATER PONTO 2025
         await page.waitForSelector("#ext-139");
         await page.click("#ext-139");
         await page.type("#ext-139", "Public@2025");
 
       
-        // Clicando no botão de login
+        // Clicando no botão de login 2025
        await page.waitForSelector("#ext-141");
        await page.click("#ext-141");
 
