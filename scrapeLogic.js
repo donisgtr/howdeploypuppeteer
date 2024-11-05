@@ -59,7 +59,7 @@ const scrapeLogic = async (res) => {
         // Preenchendo a senha de BATER PONTO
         await page.waitForSelector("#ext-139");
         await page.click("#ext-139");
-        await page.type("#ext-139", "Public@99");
+        await page.type("#ext-139", "Public@2025");
 
       
         // Clicando no botão de login
